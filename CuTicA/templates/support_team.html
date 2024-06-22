@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Team</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="CuTicA Logo">
+        </div>
+        <ul>
+            <li class="active"><a href="{{ url_for('dashboard_page') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('customers_page') }}"><i class="fas fa-users"></i> Customers</a></li>
+            <li ><a href="{{ url_for('support_team') }}"><i class="fas fa-ticket-alt"></i> Support Team</a></li>
+            <li><a href="{{ url_for('account_page') }}"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="{{ url_for('notification_page') }}"><i class="fas fa-bell"></i> Notification</a></li>
+            <li><a href="{{ url_for('settings_page') }}"><i class="fas fa-cog"></i> Settings</a></li>            
+            <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="{{ url_for('help_page') }}"><i class="fas fa-question-circle"></i> Help</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="user-info">
+            <span>Hello {{ session['username'] }}, Administrator</span>
+        </div>
+        <div class="header">
+            <div class="search-add-container">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search by name, email id, support ID">
+                </div>
+                <a href="{{ url_for('add_support') }}" class="add-support-button">ADD SUPPORT</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <table class="support-table">
+                <thead>
+                    <tr>
+                        <th>Support ID</th>
+                        <th>Support name</th>
+                        <th>Email ID</th>
+                        <th>Phone number</th>
+                        <th>Active tickets</th>
+                        <th>Credentials</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for support in support_members %}
+                    <tr>
+                        <td>{{ support.support_id }}</td>
+                        <td>{{ support.name }}</td>
+                        <td>{{ support.email }}</td>
+                        <td>{{ support.phone }}</td>
+                        <td><a href="#">View</a></td>
+                        <td><a href="#">View</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
