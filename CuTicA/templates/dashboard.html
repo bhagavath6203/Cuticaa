@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytic Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .chart-container canvas {
+            width: 45%;
+            max-width: 600px;
+            max-height: 400px;
+        }
+        .issue-counts-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .issue-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .issue-table th, .issue-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .issue-table th {
+            background-color: #f2f2f2;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .summary div {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+            flex: 1;
+            margin-right: 10px;
+        }
+        .summary div:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="CuTicA Logo">
+        </div>
+        <ul>
+            <li><a href="{{ url_for('dashboard_page') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('customers_page') }}"><i class="fas fa-users"></i> Customers</a></li>
+            <li><a href="{{ url_for('support_team') }}"><i class="fas fa-ticket-alt"></i> Support Team</a></li>
+            <li><a href="{{ url_for('account_page') }}"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="{{ url_for('notification_page') }}"><i class="fas fa-bell"></i> Notification</a></li>
+            <li class="active"><a href="{{ url_for('settings_page') }}"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="{{ url_for('help_page') }}"><i class="fas fa-question-circle"></i> Help</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h3>Analytics</h3>
+        <div class="summary">
+            <div id="totalIssues">Total Issues: 0</div>
+            <div id="solvedIssues">Solved Issues: 0</div>
+            <div id="unsolvedIssues">Unsolved Issues: 0</div>
+        </div>
+        <div class="chart-container">
+            <canvas id="barChart"></canvas>
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div class="issue-counts-container" id="issueCountsContainer">
+            <!-- Issue counts table will be dynamically added here -->
+        </div>
+    </div>
+    <script>
+        fetch('/get_data')
+        .then(response => response.json())
+        .then(data => {
+            // Extract issue types and counts for the bar chart
+            const issueTypes = data.issues_data.map(issue => issue.type);
+            const solvedCounts = data.issues_data.map(issue => issue.solved);
+            const unsolvedCounts = data.issues_data.map(issue => issue.unsolved);
+
+            // Calculate total, solved, and unsolved issues
+            const totalIssues = solvedCounts.reduce((sum, count) => sum + count, 0) + unsolvedCounts.reduce((sum, count) => sum + count, 0);
+            const solvedIssues = solvedCounts.reduce((sum, count) => sum + count, 0);
+            const unsolvedIssues = unsolvedCounts.reduce((sum, count) => sum + count, 0);
+
+            // Update summary counts
+            document.getElementById('totalIssues').textContent = `Total Issues: ${totalIssues}`;
+            document.getElementById('solvedIssues').textContent = `Solved Issues: ${solvedIssues}`;
+            document.getElementById('unsolvedIssues').textContent = `Unsolved Issues: ${unsolvedIssues}`;
+
+            // Update bar chart
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            const barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: issueTypes,
+                    datasets: [
+                        {
+                            label: 'Solved',
+                            data: solvedCounts,
+                            backgroundColor: '#28a745',
+                            borderColor: '#28a745',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Unsolved',
+                            data: unsolvedCounts,
+                            backgroundColor: '#dc3545',
+                            borderColor: '#dc3545',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Update pie chart
+            const ctxPie = document.getElementById('pieChart').getContext('2d');
+            const pieChart = new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Solved', 'Unsolved'],
+                    datasets: [{
+                        data: [solvedIssues, unsolvedIssues],
+                        backgroundColor: [
+                            '#28a745',
+                            '#dc3545'
+                        ],
+                        borderColor: [
+                            'rgba(40, 167, 69, 1)',
+                            'rgba(220, 53, 69, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+
+            // Create and populate the table
+            const issueCountsContainer = document.getElementById('issueCountsContainer');
+            const table = document.createElement('table');
+            table.classList.add('issue-table');
+
+            // Create table header
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            const headers = ['Issue Type', 'No. of Issues'];
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Create table body
+            const tbody = document.createElement('tbody');
+            data.issues_data.forEach(issue => {
+                const row = document.createElement('tr');
+
+                const typeCell = document.createElement('td');
+                typeCell.textContent = issue.type;
+                row.appendChild(typeCell);
+
+                const countCell = document.createElement('td');
+                const totalIssueCount = issue.solved + issue.unsolved;
+                countCell.textContent = totalIssueCount;
+                row.appendChild(countCell);
+
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            // Append the table to the container
+            issueCountsContainer.appendChild(table);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>

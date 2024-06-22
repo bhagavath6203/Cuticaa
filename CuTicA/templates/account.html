@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Accounts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="CuTicA Logo">
+        </div>
+        <ul>
+            <li><a href="{{ url_for('dashboard_page') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{{ url_for('customers_page') }}"><i class="fas fa-users"></i> Customers</a></li>
+            <li ><a href="{{ url_for('support_team') }}"><i class="fas fa-ticket-alt"></i> Support Team</a></li>
+            <li class="active"><a href="{{ url_for('account_page') }}"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="{{ url_for('notification_page') }}"><i class="fas fa-bell"></i> Notification</a></li>
+            <li><a href="{{ url_for('settings_page') }}"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="{{ url_for('help_page') }}"><i class="fas fa-question-circle"></i> Help</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="user-info">
+            <span>Hello {{ session['username'] }}, Administrator</span>
+        </div>
+
+    </div>
+</body>
+
+</html>

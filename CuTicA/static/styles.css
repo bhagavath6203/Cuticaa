@@ -1,0 +1,329 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #000;
+    color: #ffa500;
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+header .logo img {
+    height: 100px;
+    margin-right: 10px;
+}
+
+header nav {
+    margin-right: 20px;
+}
+
+header nav a {
+    color: #ffa500;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.welcome-section, .form-section {
+    background-color: white;
+    padding: 40px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    text-align: justify;
+}
+
+h1, h2 {
+    color: #ffa500;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #000;
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+p {
+    color: #000;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+ul {
+    text-align: left;
+    margin: 20px auto;
+    padding-left: 20px;
+    color: #000;
+    font-size: 18px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button, .button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffa500;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .button:hover {
+    background-color: #ff8c00;
+}
+
+a {
+    display: block;
+    margin: 10px 0;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.flash {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+#messages .danger {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* New styles for the support team interface */
+.sidebar {
+    width: 250px;
+    background-color: #000;
+    color: #fff;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar img {
+    width: 150px;
+    margin: 20px 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.sidebar ul li {
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sidebar ul li a:hover, .sidebar ul li a.active {
+    background-color: #fec053;
+    color: #000;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+    box-sizing: border-box; /* Add this line */
+}
+
+.content-header, .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.user-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: right;
+    color: #000;
+}
+
+.user-info span {
+    display: block;
+}
+
+.header .search-add-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.header .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 5px 10px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    width: 70%;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.search-bar i {
+    color: #000;
+}
+
+.header .add-support-button, .add-support-button {
+    background-color: #fec053;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    text-decoration: none;
+    width: 20%;
+}
+
+.header .add-support-button:hover, .add-support-button:hover {
+    background-color: #ff8c00;
+}
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    padding: 0 20px; /* Add this line */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #fec053;
+    color: #000;
+}
+
+table td a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+table td a:hover {
+    text-decoration: underline;
+}
+
+.main-content table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.main-content table tr:nth-child(odd) {
+    background-color: #fff;
+
+/* New styles for the add support interface */
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+}
